@@ -1,32 +1,29 @@
-# Lumain Website
+# Lumain - AI Company Website
 
-A modern, minimal website for Lumain, a future-oriented AI company.
+A modern, responsive website for Lumain, an AI company dedicated to expanding human potential through artificial intelligence.
 
 ## Features
-- Intelligent, human-centered, strategic tone
-- Deep blue and white palette, clean rounded layouts
-- Pages: Home, About Us, What We Do, Use Cases, Contact
-- Inter and Manrope fonts
-- Modern React + Vite stack
 
-## Setup
+- Modern, minimal design with deep blue and white palette
+- Responsive layout with smooth scrolling
+- Multi-language support (Korean/English)
+- Interactive UI elements and animations
+- Contact form with email integration
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   npm install react-router-dom
-   ```
+## Tech Stack
 
-2. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
+- React
+- Vite
+- CSS3 with modern features
+- Responsive design principles
 
-3. **Build for production:**
-   ```bash
-   npm run build
-   ```
+## Getting Started
 
----
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Run development server: `npm run dev`
+4. Build for production: `npm run build`
 
-© Lumain. All rights reserved. 
+## License
+
+MIT License
