@@ -43,11 +43,11 @@ export default function UseCases({ lang }) {
   return (
     <section>
       <h2>{lang === 'ko' ? '활용 사례' : 'Use Cases'}</h2>
-      <div style={{display: 'grid', gap: '1.5rem', marginTop: '1.5rem', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))'}}>
+      <div className="use-cases-grid">
         {cases.map((uc, i) => (
-          <div key={i} style={{background: 'rgba(10,35,66,0.85)', borderRadius: 'var(--radius)', padding: '1.5rem', boxShadow: '0 2px 12px 0 rgba(37,99,255,0.08)'}}>
-            <h3 style={{margin: 0, color: 'var(--accent-blue)', fontSize: '1.2rem'}}>{uc.title}</h3>
-            <p style={{marginTop: '0.7rem', fontSize: '1rem', color: 'var(--text-light)'}}>{uc.desc}</p>
+          <div key={i} className="use-case-item">
+            <h3>{uc.title}</h3>
+            <p>{uc.desc}</p>
           </div>
         ))}
       </div>

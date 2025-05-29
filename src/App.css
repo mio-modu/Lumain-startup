@@ -450,4 +450,57 @@ button[type="submit"]:active {
 /* Adjust padding for WhatWeDo list items if needed */
 #what-we-do .lumain-section ul > li {
    padding: 1.3rem 1.5rem; /* Keep What We Do's specific padding, or adjust */
+}
+
+/* Use Cases Section Styles */
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 2rem; /* Increased gap */
+  margin-top: 2rem; /* Increased top margin */
+  padding: 0 2rem; /* Added horizontal padding */
+}
+
+.use-case-item {
+  background: rgba(10, 35, 66, 0.85);
+  border-radius: var(--radius);
+  padding: 2rem; /* Increased padding */
+  box-shadow: 0 4px 15px 0 rgba(37, 99, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute space */
+}
+
+.use-case-item h3 {
+  margin: 0;
+  color: var(--accent-blue);
+  font-size: 1.4rem; /* Increased font size */
+  margin-bottom: 0.8rem; /* Added margin below title */
+}
+
+.use-case-item p {
+  margin-top: 0;
+  font-size: 1.1rem; /* Increased font size */
+  color: var(--text-light);
+  line-height: 1.6; /* Improved readability */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .use-cases-grid {
+    grid-template-columns: 1fr; /* Stack on smaller screens */
+    padding: 0 1rem;
+  }
+
+  .use-case-item {
+    padding: 1.5rem;
+  }
+
+  .use-case-item h3 {
+    font-size: 1.3rem;
+  }
+
+  .use-case-item p {
+    font-size: 1rem;
+  }
 } 
