@@ -1,162 +1,87 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useRef } from 'react';
+import './App.css';
+import Logo from './components/Logo';
 import Home from './pages/Home';
 import About from './pages/About';
-import WhatWeDo from './pages/WhatWeDo';
-import UseCases from './pages/UseCases';
+import Services from './pages/Services';
+import Cases from './pages/Cases';
 import Contact from './pages/Contact';
-import './App.css';
 
 const sectionLabels = {
-  ko: [
-    { id: 'home', label: '홈' },
-    { id: 'about', label: '회사소개' },
-    { id: 'what-we-do', label: '주요 서비스' },
-    { id: 'use-cases', label: '활용 사례' },
-    { id: 'contact', label: '문의하기' },
-  ],
-  en: [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About Us' },
-    { id: 'what-we-do', label: 'What We Do' },
-    { id: 'use-cases', label: 'Use Cases' },
-    { id: 'contact', label: 'Contact' },
-  ]
+  home: { ko: '홈', en: 'Home' },
+  about: { ko: '회사소개', en: 'About' },
+  services: { ko: '서비스', en: 'Services' },
+  cases: { ko: '사례', en: 'Cases' },
+  contact: { ko: '문의하기', en: 'Contact' }
 };
 
-function Logo() {
-  return (
-    <div className="logo">
-      <span className="logo-text">
-        lumain
-        <span className="logo-dot" />
-      </span>
-    </div>
-  );
-}
-
 function App() {
+  const [activeSection, setActiveSection] = useState('home');
   const [lang, setLang] = useState('ko');
-  const sectionRefs = useRef({});
-  const parallaxRefs = useRef({});
-  const [active, setActive] = useState('home');
-  const [visibleSections, setVisibleSections] = useState({});
-  const sections = sectionLabels[lang];
+  const sections = useRef({});
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 120;
-      let current = 'home';
-      for (const { id } of sections) {
-        const ref = sectionRefs.current[id];
-        if (ref) {
-          const { offsetTop } = ref;
-          if (scrollPosition >= offsetTop) {
-            current = id;
-          }
-        }
-      }
-      setActive(current);
-      for (const { id } of sections) {
-        const section = sectionRefs.current[id];
-        const layers = parallaxRefs.current[id] || [];
-        if (section && layers.length === 3) {
-          const rect = section.getBoundingClientRect();
-          const windowH = window.innerHeight;
-          const progress = Math.min(Math.max((windowH - rect.top) / (windowH + rect.height), 0), 1);
-          layers[0].style.transform = `translateY(${(progress - 0.5) * 40}px)`;
-          layers[1].style.transform = `translateY(${(progress - 0.5) * 70}px)`;
-          layers[2].style.transform = `translateY(${(progress - 0.5) * 110}px)`;
-        }
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [sections]);
-
-  useEffect(() => {
-    const observer = new window.IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleSections((prev) => ({ ...prev, [entry.target.id]: true }));
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    sections.forEach(({ id }) => {
-      const ref = sectionRefs.current[id];
-      if (ref) observer.observe(ref);
-    });
-    return () => observer.disconnect();
-  }, [sections]);
-
-  const handleNavClick = (id) => (e) => {
-    e.preventDefault();
-    const ref = sectionRefs.current[id];
-    if (ref) {
-      ref.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  const handleNavClick = (section) => {
+    setActiveSection(section);
+    sections.current[section]?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <>
-      <header className="header fixed-header">
-        <Logo />
-        <div style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
-          <nav>
-            {sections.map(({ id, label }) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                className={active === id ? 'active' : ''}
-                onClick={handleNavClick(id)}
-              >
-                {label}
-              </a>
-            ))}
-          </nav>
-          <div style={{marginTop: '2rem', marginLeft: '0.2rem'}}>
-            <button onClick={() => setLang('ko')} style={{marginRight: '0.5rem', fontWeight: lang==='ko'?700:400, background:'none', border:'none', color:'var(--white)', cursor:'pointer'}}>한국어</button>
-            <button onClick={() => setLang('en')} style={{fontWeight: lang==='en'?700:400, background:'none', border:'none', color:'var(--white)', cursor:'pointer'}}>English</button>
+    <div className="App">
+      <header className="header">
+        <div className="header-content">
+          <div className="header-left">
+            <Logo />
+            <nav className="nav-links">
+              {Object.entries(sectionLabels).map(([key, labels]) => (
+                <button
+                  key={key}
+                  className={`nav-link ${activeSection === key ? 'active' : ''}`}
+                  onClick={() => handleNavClick(key)}
+                >
+                  {lang === 'ko' ? labels.ko : labels.en}
+                </button>
+              ))}
+            </nav>
+          </div>
+          <div className="language-switch">
+            <button
+              className={lang === 'ko' ? 'active' : ''}
+              onClick={() => setLang('ko')}
+            >
+              KR
+            </button>
+            <button
+              className={lang === 'en' ? 'active' : ''}
+              onClick={() => setLang('en')}
+            >
+              EN
+            </button>
           </div>
         </div>
       </header>
-      
-      <main className="main-content single-page">
-        {sections.map(({ id }) => {
+
+      <main className="main-content">
+        {Object.entries(sectionLabels).map(([key]) => {
           let SectionComponent;
-          if (id === 'home') SectionComponent = Home;
-          else if (id === 'about') SectionComponent = About;
-          else if (id === 'what-we-do') SectionComponent = WhatWeDo;
-          else if (id === 'use-cases') SectionComponent = UseCases;
-          else if (id === 'contact') SectionComponent = Contact;
+          if (key === 'home') SectionComponent = Home;
+          else if (key === 'about') SectionComponent = About;
+          else if (key === 'services') SectionComponent = Services;
+          else if (key === 'cases') SectionComponent = Cases;
+          else if (key === 'contact') SectionComponent = Contact;
+
           return (
             <section
-              id={id}
-              key={id}
-              ref={el => (sectionRefs.current[id] = el)}
-              className={`lumain-section animate-section${visibleSections[id] ? ' visible' : ''}`}
+              key={key}
+              ref={(el) => (sections.current[key] = el)}
+              className={`lumain-section ${activeSection === key ? 'active-section' : 'inactive-section'}`}
+              style={{ display: activeSection === key ? 'flex' : 'none' }}
             >
-              <div className="parallax-bg-layer1" ref={el => {
-                if (!parallaxRefs.current[id]) parallaxRefs.current[id] = [];
-                parallaxRefs.current[id][0] = el;
-              }} />
-              <div className="parallax-bg-layer2" ref={el => {
-                if (!parallaxRefs.current[id]) parallaxRefs.current[id] = [];
-                parallaxRefs.current[id][1] = el;
-              }} />
-              <div className="parallax-bg-layer3" ref={el => {
-                if (!parallaxRefs.current[id]) parallaxRefs.current[id] = [];
-                parallaxRefs.current[id][2] = el;
-              }} />
               <SectionComponent lang={lang} />
             </section>
           );
         })}
       </main>
-    </>
+    </div>
   );
 }
 
