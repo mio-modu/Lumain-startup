@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Lumain - AI Company Website
 
 A modern, responsive website for Lumain, an AI company dedicated to expanding human potential through artificial intelligence.
@@ -27,3 +28,6 @@ A modern, responsive website for Lumain, an AI company dedicated to expanding hu
 ## License
 
 MIT License
+=======
+# Lumain-startup
+>>>>>>> 404e791d9e9f295df2618a82784d3c21a1d5d64e
